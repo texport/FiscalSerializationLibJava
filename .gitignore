@@ -49,3 +49,8 @@ local.properties
 
 # === Dev container ===
 .devcontainer/
+
+# Gradle Cache and Reports
+**/.gradle/
+**/build/
+**/out/

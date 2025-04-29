@@ -11,7 +11,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.texport:kgdkkmproto:dev-SNAPSHOT")
+    implementation("com.github.texport:kgdkkmproto:2.0.2")
     implementation("com.google.protobuf:protobuf-java:4.28.2")
 
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
