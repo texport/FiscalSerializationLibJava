@@ -4,7 +4,7 @@ import com.mybrain.kkmlib.internal.MessageHeaderCodec;
 import com.mybrain.kkmlib.internal.models.MessageHeader;
 import kz.kgdkkmproto.kkm.proto.Message;
 
-public abstract class AbstractCommandFactory {
+public abstract class AbstractCommandFactoryRequest {
 
     protected static byte[] createPayloadByte(Message.Request request) {
         return request.toByteArray();

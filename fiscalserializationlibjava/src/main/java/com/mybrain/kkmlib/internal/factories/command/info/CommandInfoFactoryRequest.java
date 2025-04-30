@@ -1,10 +1,11 @@
-package com.mybrain.kkmlib.internal.factories;
+package com.mybrain.kkmlib.internal.factories.command.info;
 
 import com.mybrain.kkmlib.api.request.KkmInfoRequest;
+import com.mybrain.kkmlib.internal.factories.AbstractCommandFactoryRequest;
 import com.mybrain.kkmlib.internal.models.MessageHeader;
 import kz.kgdkkmproto.kkm.proto.Message;
 
-public class CommandInfoFactory extends AbstractCommandFactory {
+public class CommandInfoFactoryRequest extends AbstractCommandFactoryRequest {
 
     /**
      * Метод для создания и возвращения байтового массива header + payload
