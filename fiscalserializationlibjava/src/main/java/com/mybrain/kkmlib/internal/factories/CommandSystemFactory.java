@@ -1,6 +1,7 @@
 package com.mybrain.kkmlib.internal.factories;
 
 import com.mybrain.kkmlib.api.request.CheckOfdConnection;
+import com.mybrain.kkmlib.api.request.KkmInfoRequest;
 import com.mybrain.kkmlib.internal.models.MessageHeader;
 import kz.kgdkkmproto.kkm.proto.Message;
 
