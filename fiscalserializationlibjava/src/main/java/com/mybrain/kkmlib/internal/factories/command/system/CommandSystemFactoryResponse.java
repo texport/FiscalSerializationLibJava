@@ -6,11 +6,16 @@ import com.mybrain.kkmlib.api.common.Result;
 import com.mybrain.kkmlib.api.errors.ErrorCode;
 import com.mybrain.kkmlib.api.errors.KkmLibException;
 import com.mybrain.kkmlib.api.response.CheckOfdConnectionResponse;
+import com.mybrain.kkmlib.api.response.models.ServiceResponse;
 import com.mybrain.kkmlib.internal.factories.AbstractCommandFactoryResponse;
 import com.mybrain.kkmlib.internal.factories.CommonFactory;
+import com.mybrain.kkmlib.internal.factories.service.ServiceFactoryResponse;
 import com.mybrain.kkmlib.internal.models.MessageHeader;
 import com.mybrain.kkmlib.internal.models.ResponseParts;
 import kz.kgdkkmproto.kkm.proto.Message;
+import kz.kgdkkmproto.kkm.proto.Service;
+
+import java.util.Optional;
 
 public class CommandSystemFactoryResponse extends AbstractCommandFactoryResponse {
 
@@ -30,13 +35,18 @@ public class CommandSystemFactoryResponse extends AbstractCommandFactoryResponse
             throw new KkmLibException(ErrorCode.PAYLOAD_BAD_COMMAND);
         }
 
+        // TODO: Добавить проверку на наличие Result в ответе от сервера
         Message.Result resultPayload = payload.getResult();
         Result result = new Result(resultPayload.getResultCode(), resultPayload.getResultText());
 
-        // TODO: Добавить сервисную часть после фабрики
+        Optional<ServiceResponse> serviceResponse = Optional.empty();
 
-        return new CheckOfdConnectionResponse(kkm, result, null);
+        // TODO: Добавить проверку на наличие Service в ответе от сервера
+        if (payload.hasService()) {
+            Service.ServiceResponse serviceResponseProto = payload.getService();
+            serviceResponse = Optional.of(ServiceFactoryResponse.getResponse(serviceResponseProto));
+        }
+
+        return new CheckOfdConnectionResponse(kkm, result, serviceResponse);
     }
-
-
 }
