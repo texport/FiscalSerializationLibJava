@@ -36,7 +36,7 @@ public final class TicketAdTypeMapper {
     public static TicketAdType fromProto(TicketAdTypeEnum protoEnum) {
         TicketAdType result = PROTO_TO_USER.get(protoEnum);
         if (result == null) {
-            throw new KkmLibException(ErrorCode.UNKNOWN_OFD_TICKET_AD_TYPE);
+            throw new KkmLibException(ErrorCode.OFD_TICKET_AD_TYPE_UNKNOWN);
         }
         return result;
     }
@@ -48,7 +48,7 @@ public final class TicketAdTypeMapper {
     public static TicketAdTypeEnum toProto(TicketAdType userEnum) {
         TicketAdTypeEnum result = USER_TO_PROTO.get(userEnum);
         if (result == null) {
-            throw new KkmLibException(ErrorCode.UNKNOWN_TICKET_AD_TYPE);
+            throw new KkmLibException(ErrorCode.USER_UNKNOWN_TICKET_AD_TYPE);
         }
         return result;
     }

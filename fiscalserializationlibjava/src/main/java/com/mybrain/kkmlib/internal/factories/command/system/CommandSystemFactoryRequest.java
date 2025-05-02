@@ -1,5 +1,6 @@
 package com.mybrain.kkmlib.internal.factories.command.system;
 
+import com.mybrain.kkmlib.api.common.Kkm;
 import com.mybrain.kkmlib.api.request.CheckOfdConnectionRequest;
 import com.mybrain.kkmlib.internal.factories.AbstractCommandFactoryRequest;
 import com.mybrain.kkmlib.internal.models.MessageHeader;
@@ -7,10 +8,10 @@ import kz.kgdkkmproto.kkm.proto.Message;
 
 public class CommandSystemFactoryRequest extends AbstractCommandFactoryRequest {
 
-    public static byte[] createRequest(CheckOfdConnectionRequest input, long id, long token, int reqNum) {
+    public static byte[] createRequest(CheckOfdConnectionRequest input, Kkm kkm) {
         Message.Request payload = createPayloadRequest(input);
         byte[] payloadByte = createPayloadByte(payload);
-        MessageHeader header = createHeader(id, token, reqNum, payloadByte.length);
+        MessageHeader header = createHeader(kkm.id(), kkm.token(), kkm.reqNum(), payloadByte.length);
         byte[] headerByte = createHeaderByte(header);
         return createRequestByte(headerByte, payloadByte);
     }
