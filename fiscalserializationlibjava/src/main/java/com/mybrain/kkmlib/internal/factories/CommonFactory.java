@@ -25,6 +25,8 @@ public class CommonFactory {
         byte[] header = new byte[HEADER_SIZE];
         byte[] payload = new byte[response.length - HEADER_SIZE];
 
+        // FIXME: Нужно проверить будет ли тут баг с нумерацией массива.
+        // FIXME: Бага не будет потом что берется 18 элементов от 0 до 17, payload берется с 18 и до конца
         System.arraycopy(response, 0, header, 0, HEADER_SIZE);
         System.arraycopy(response, HEADER_SIZE, payload, 0, payload.length);
 

@@ -6,7 +6,7 @@ public enum ErrorCode {
     PAYLOAD_NOT_RESULT("Сервер ОФД НАРУШИЛ ПРОТОКОЛ: не сообщил результат обработки запроса."),
     PAYLOAD_NOT_COMMAND("Сервер ОФД НАРУШИЛ ПРОТОКОЛ: не сообщил команду на которую отправил ответ."),
     PAYLOAD_BAD_COMMAND("Сервер ОФД НАРУШИЛ ПРОТОКОЛ: отправил на ваш запрос другой номер команды."),
-
+    
     /*
      * Ошибки с рекламными текстами
      */
@@ -34,6 +34,14 @@ public enum ErrorCode {
     OFD_POS_REG_INFO_TITLE_NOT_FOUND("Сервер ОФД НАРУШИЛ ПРОТОКОЛ: при отправке сервисной части не передал PosTitle."),
     OFD_POS_REG_INFO_ADDRESS_NOT_FOUND("Сервер ОФД НАРУШИЛ ПРОТОКОЛ: при отправке сервисной части не передал PosAddress."),
 
+    ARGUMENT_NULL("%s не может быть null."),
+    ARGUMENT_EQUAL_LENGTH("%s должен быть равен %d."),
+    ARGUMENT_STRING_NUMBER("%s должен содержать только цифры."),
+    ARGUMENT_SPACES_BEGIN_END("%s не может иметь пробелы в начале или конце."),
+    ARGUMENT_EMPTY("%s не может быть пустым."),
+    ARGUMENT_NOT_LONGER_COULD("%s не может быть больше чем %d символов."),
+    ARGUMENT_NOT_SPACES("%s не может состоять только из пробелов."),
+
     UNKNOWN_ERROR("Неизвестная ошибка.");
 
     private final String message;
@@ -44,5 +52,9 @@ public enum ErrorCode {
 
     public String message() {
         return message;
+    }
+
+    public String format(Object... args) {
+        return String.format(message, args);
     }
 }
