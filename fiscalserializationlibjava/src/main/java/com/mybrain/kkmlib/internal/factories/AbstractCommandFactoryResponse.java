@@ -3,12 +3,13 @@ package com.mybrain.kkmlib.internal.factories;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.mybrain.kkmlib.api.errors.ErrorCode;
 import com.mybrain.kkmlib.api.errors.KkmLibException;
+import com.mybrain.kkmlib.api.response.IResponse;
 import com.mybrain.kkmlib.internal.MessageHeaderCodec;
 import com.mybrain.kkmlib.internal.models.MessageHeader;
 import com.mybrain.kkmlib.api.common.Result;
 import kz.kgdkkmproto.kkm.proto.Message;
 
-public abstract class AbstractCommandFactoryResponse {
+public abstract class AbstractCommandFactoryResponse<R extends IResponse> implements IResponseFactory<R> {
 
     protected static MessageHeader createByteToHeader(byte[] messageHeader) {
         return MessageHeaderCodec.decode(messageHeader);

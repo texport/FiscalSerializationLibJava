@@ -6,4 +6,4 @@ import com.mybrain.kkmlib.api.response.models.ServiceResponse;
 
 import java.util.Optional;
 
-public record CheckOfdConnectionResponse(Kkm kkm, Result result, Optional<ServiceResponse> service) { }
+public record CheckOfdConnectionResponse(Kkm kkm, Result result, Optional<ServiceResponse> service) implements IResponse { }

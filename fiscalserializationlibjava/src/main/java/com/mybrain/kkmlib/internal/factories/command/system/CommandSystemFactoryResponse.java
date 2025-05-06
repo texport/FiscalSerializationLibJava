@@ -17,9 +17,9 @@ import kz.kgdkkmproto.kkm.proto.Service;
 
 import java.util.Optional;
 
-public class CommandSystemFactoryResponse extends AbstractCommandFactoryResponse {
+public class CommandSystemFactoryResponse extends AbstractCommandFactoryResponse<CheckOfdConnectionResponse> {
 
-    public static CheckOfdConnectionResponse getResponse(byte[] response) throws InvalidProtocolBufferException {
+    public CheckOfdConnectionResponse getResponse(byte[] response) throws InvalidProtocolBufferException {
         ResponseParts headerPayloadByte = CommonFactory.createCommandResponse(response);
         MessageHeader header = createByteToHeader(headerPayloadByte.headerByte());
         Message.Response payload = createByteToPayload(headerPayloadByte.payloadByte());

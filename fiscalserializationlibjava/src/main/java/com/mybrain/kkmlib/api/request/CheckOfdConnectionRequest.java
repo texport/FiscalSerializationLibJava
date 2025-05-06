@@ -1,3 +1,5 @@
 package com.mybrain.kkmlib.api.request;
 
-public class CheckOfdConnectionRequest { }
+import com.mybrain.kkmlib.api.request.models.ServiceRequest;
+
+public record CheckOfdConnectionRequest(ServiceRequest serviceRequest) implements IRequest { }

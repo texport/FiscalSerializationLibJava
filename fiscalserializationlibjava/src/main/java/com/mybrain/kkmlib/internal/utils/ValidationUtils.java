@@ -3,6 +3,7 @@ package com.mybrain.kkmlib.internal.utils;
 import com.mybrain.kkmlib.api.errors.ErrorCode;
 import com.mybrain.kkmlib.api.errors.KkmLibException;
 
+// TODO: Подумать над тем как сделать валидацию всего IRequest или IResponse
 public class ValidationUtils {
     private ValidationUtils() { }
 

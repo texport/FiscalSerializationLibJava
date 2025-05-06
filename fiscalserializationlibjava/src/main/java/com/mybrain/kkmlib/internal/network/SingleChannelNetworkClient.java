@@ -13,7 +13,7 @@ public class SingleChannelNetworkClient implements INetworkClient {
 
     private static final SingleChannelNetworkClient instance = new SingleChannelNetworkClient();
 
-    private SingleChannelNetworkClient() {}
+    private SingleChannelNetworkClient() { }
 
     public static SingleChannelNetworkClient getInstance() {
         return instance;

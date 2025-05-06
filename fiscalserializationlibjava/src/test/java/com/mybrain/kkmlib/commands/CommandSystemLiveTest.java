@@ -1,51 +1,48 @@
 package com.mybrain.kkmlib.commands;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.mybrain.kkmlib.api.DeliveryManager;
 import com.mybrain.kkmlib.api.common.Kkm;
+import com.mybrain.kkmlib.api.enums.OfdEnum;
+import com.mybrain.kkmlib.api.models.reginfo.KkmRegInfo;
+import com.mybrain.kkmlib.api.models.reginfo.OrgRegInfo;
 import com.mybrain.kkmlib.api.request.CheckOfdConnectionRequest;
-import com.mybrain.kkmlib.api.response.CheckOfdConnectionResponse;
-import com.mybrain.kkmlib.internal.MessageHeaderCodec;
-import com.mybrain.kkmlib.internal.factories.command.system.CommandSystemFactoryRequest;
-import com.mybrain.kkmlib.internal.factories.command.system.CommandSystemFactoryResponse;
-import com.mybrain.kkmlib.internal.models.MessageHeader;
-import com.mybrain.kkmlib.internal.network.SingleChannelNetworkClient;
+import com.mybrain.kkmlib.api.request.models.OfflinePeriodRequest;
+import com.mybrain.kkmlib.api.request.models.RegInfoRequest;
+import com.mybrain.kkmlib.api.request.models.ServiceRequest;
+import com.mybrain.kkmlib.api.response.IResponse;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.time.LocalDateTime;
 
 public class CommandSystemLiveTest {
 
+    // Куда доставить
     private static final String OFD_IP = "37.150.215.187"; // IP ОФД
     private static final int OFD_PORT = 7777;               // Порт ОФД
+
+    // Кому доставить
     private static final Kkm kkm = new Kkm(201873, 72696433, 1);
 
     @Test
     void shouldSendCommandSystemAndReceiveValidResponse() throws Exception {
         // 1. Сформировать запрос
-        CheckOfdConnectionRequest checkOfdConnectionRequest = new CheckOfdConnectionRequest();
-        byte[] request = CommandSystemFactoryRequest.createRequest(checkOfdConnectionRequest, kkm);
-        System.out.println("Распечатываем собранный Request: " + Arrays.toString(request));
+        OfflinePeriodRequest offlinePeriodRequest = new OfflinePeriodRequest(LocalDateTime.now(), LocalDateTime.now());
+        KkmRegInfo kkmRegInfo = new KkmRegInfo("391827192812", "5465434234", "201873");
+        OrgRegInfo orgRegInfo = new OrgRegInfo("12312412f","123213214f","960624350642","123214214");
+        RegInfoRequest regInfoRequest = new RegInfoRequest(kkmRegInfo, orgRegInfo);
+        ServiceRequest serviceRequest = new ServiceRequest(offlinePeriodRequest, regInfoRequest);
 
-        // 2. Отправить и получить ответ
-        byte[] response = SingleChannelNetworkClient.getInstance()
-                .sendToServer(request, OFD_IP, OFD_PORT);
-        System.out.println("Распечатываем полученный Response в байтах: " + Arrays.toString(response));
+        // Что доставить
+        CheckOfdConnectionRequest checkOfdConnectionRequest = new CheckOfdConnectionRequest(serviceRequest);
+        IResponse response = new DeliveryManager().deliver(checkOfdConnectionRequest, kkm, OfdEnum.KAZAKHTELECOM.test());
 
-        CheckOfdConnectionResponse commandSystemFactoryResponse = CommandSystemFactoryResponse.getResponse(response);
-        System.out.println("Распечатываем полученный Response в виде библиотеки: " + commandSystemFactoryResponse);
-        
-        // 3. Проверки
-        assertNotNull(response);
-        assertTrue(response.length >= 18, "Ответ должен содержать минимум заголовок");
+        System.out.println("Распечатываем полученный Response в виде библиотеки: " + response);
 
-        byte[] headerBytes = new byte[18];
-        System.arraycopy(response, 0, headerBytes, 0, 18);
-
-        MessageHeader header = MessageHeaderCodec.decode(headerBytes);
-        assertTrue(header.size() <= response.length, "Размер в заголовке больше, чем фактический размер");
-
-        System.out.println("Ответ получен: " + header);
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new Jdk8Module());
+        String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(response);
+        System.out.println("Распечатываем полученный Response в виде Json: " + json);
     }
 }

@@ -42,6 +42,9 @@ public enum ErrorCode {
     ARGUMENT_NOT_LONGER_COULD("%s не может быть больше чем %d символов."),
     ARGUMENT_NOT_SPACES("%s не может состоять только из пробелов."),
 
+    NETWORK_IO_ERROR("Ошибка сетевого соединения с сервером ОФД."),
+    UNEXPECTED_ERROR("Неожиданная ошибка при обработке запроса."),
+    HANDLER_NOT_FOUND("Обработчик для команды не найден или не зарегистрирован."),
     UNKNOWN_ERROR("Неизвестная ошибка.");
 
     private final String message;
