@@ -9,6 +9,7 @@ import com.mybrain.kkmlib.api.response.CheckOfdConnectionResponse;
 import com.mybrain.kkmlib.api.response.models.ServiceResponse;
 import com.mybrain.kkmlib.internal.factories.AbstractCommandFactoryResponse;
 import com.mybrain.kkmlib.internal.factories.CommonFactory;
+import com.mybrain.kkmlib.internal.factories.FactoryResult;
 import com.mybrain.kkmlib.internal.factories.service.ServiceFactoryResponse;
 import com.mybrain.kkmlib.internal.models.MessageHeader;
 import com.mybrain.kkmlib.internal.models.ResponseParts;
@@ -44,7 +45,12 @@ public class CommandSystemFactoryResponse extends AbstractCommandFactoryResponse
         // TODO: Добавить проверку на наличие Service в ответе от сервера
         if (payload.hasService()) {
             Service.ServiceResponse serviceResponseProto = payload.getService();
-            serviceResponse = Optional.of(ServiceFactoryResponse.getResponse(serviceResponseProto));
+            ServiceFactoryResponse serviceFactoryResponse = new ServiceFactoryResponse();
+            FactoryResult<ServiceResponse> factoryResult = serviceFactoryResponse.getResponse(serviceResponseProto);
+
+            factoryResult.throwIfInvalid();
+
+            serviceResponse = factoryResult.getResult();
         }
 
         return new CheckOfdConnectionResponse(kkm, result, serviceResponse);

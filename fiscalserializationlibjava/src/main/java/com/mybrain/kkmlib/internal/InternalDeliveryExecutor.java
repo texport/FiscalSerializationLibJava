@@ -1,7 +1,6 @@
 package com.mybrain.kkmlib.internal;
 
 import com.mybrain.kkmlib.api.common.Kkm;
-import com.mybrain.kkmlib.api.enums.OfdEnum;
 import com.mybrain.kkmlib.api.errors.ErrorCode;
 import com.mybrain.kkmlib.api.errors.KkmLibException;
 import com.mybrain.kkmlib.api.models.OfdEnvironment;

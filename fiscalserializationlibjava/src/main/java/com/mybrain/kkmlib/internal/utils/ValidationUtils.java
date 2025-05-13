@@ -2,21 +2,34 @@ package com.mybrain.kkmlib.internal.utils;
 
 import com.mybrain.kkmlib.api.errors.ErrorCode;
 import com.mybrain.kkmlib.api.errors.KkmLibException;
+import com.mybrain.kkmlib.api.utils.LoggerManager;
 
-// TODO: Подумать над тем как сделать валидацию всего IRequest или IResponse
 public class ValidationUtils {
+
     private ValidationUtils() { }
 
-    public static <T> void requireNotNull(T value, String argumentName) {
+    public static boolean checkNotNull(Object value, String argumentName, ValidationCollector collector) {
         if (value == null) {
-            throw new KkmLibException(ErrorCode.ARGUMENT_NULL, argumentName);
+            collector.sweep(ErrorCode.ARGUMENT_NULL, argumentName);
+            return false;
         }
+        return true;
     }
 
-    public static void requireStringLength(String value, int length, String argumentName) {
-        if (value.length() != length) {
-            throw new KkmLibException(ErrorCode.ARGUMENT_EQUAL_LENGTH, length, argumentName);
+    public static boolean checkHasField(boolean hasField, String argumentName, ErrorCode errorCode, ValidationCollector collector) {
+        if (!hasField) {
+            collector.sweep(errorCode, argumentName);
+            return false;
         }
+        return true;
+    }
+
+    public static boolean checkStringLength(String value, int length, String argumentName, ValidationCollector collector) {
+        if (value.length() != length) {
+            collector.sweep(ErrorCode.ARGUMENT_EQUAL_LENGTH, length, argumentName);
+            return false;
+        }
+        return true;
     }
 
     public static void requireStringNumber(String value, String argumentName) {

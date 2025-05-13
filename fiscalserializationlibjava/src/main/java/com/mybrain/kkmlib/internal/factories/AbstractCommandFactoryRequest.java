@@ -1,6 +1,5 @@
 package com.mybrain.kkmlib.internal.factories;
 
-import com.mybrain.kkmlib.api.common.Kkm;
 import com.mybrain.kkmlib.api.request.IRequest;
 import com.mybrain.kkmlib.internal.MessageHeaderCodec;
 import com.mybrain.kkmlib.internal.models.MessageHeader;

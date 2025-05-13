@@ -41,6 +41,7 @@ public enum ErrorCode {
     ARGUMENT_EMPTY("%s не может быть пустым."),
     ARGUMENT_NOT_LONGER_COULD("%s не может быть больше чем %d символов."),
     ARGUMENT_NOT_SPACES("%s не может состоять только из пробелов."),
+    VALIDATION_FAILED("Коллектор валидаций обнаружил ошибку: %s"),
 
     NETWORK_IO_ERROR("Ошибка сетевого соединения с сервером ОФД."),
     UNEXPECTED_ERROR("Неожиданная ошибка при обработке запроса."),
